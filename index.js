@@ -11,19 +11,10 @@ app.get("/getDictionary", (req, res) => {
   const lang = req.query["lang"];
 
   try {
-    if (module) {
-      const jsonFile = fs.readFileSync(
-        path.join(__dirname, `/assets/i18n/${module}/${lang}.json`)
-      );
-      const jsonDictionary = JSON.parse(jsonFile);
-      res.send(jsonDictionary);
-    } else {
-      const jsonFile = fs.readFileSync(
-        path.join(__dirname, `/assets/i18n/${lang}.json`)
-      );
-      const jsonDictionary = JSON.parse(jsonFile);
-      res.send(jsonDictionary);
-    }
+    const path = module ? `/assets/i18n/${module}/${lang}.json` : `/assets/i18n/${lang}.json`;
+    const file = fs.readFileSync(path.join(__dirname, path));
+    const dictionry = JSON.parse(file);
+    res.send(dictionry);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
