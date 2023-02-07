@@ -11,8 +11,8 @@ app.get("/getDictionary", (req, res) => {
   const lang = req.query["lang"];
 
   try {
-    const path = module ? `/assets/i18n/${module}/${lang}.json` : `/assets/i18n/${lang}.json`;
-    const file = fs.readFileSync(path.join(__dirname, path));
+    const folder = module ? `/assets/i18n/${module}/${lang}.json` : `/assets/i18n/${lang}.json`;
+    const file = fs.readFileSync(path.join(__dirname, folder));
     const dictionry = JSON.parse(file);
     res.send(dictionry);
   } catch (err) {
