@@ -9,12 +9,28 @@ app.use(cors());
 app.get("/getDictionary", (req, res) => {
   const module = req.query["module"];
   const lang = req.query["lang"];
+  const common =  req.query["common"];
 
   try {
-    const folder = module ? `/assets/i18n/${module}/${lang}.json` : `/assets/i18n/${lang}.json`;
-    const file = fs.readFileSync(path.join(__dirname, folder));
-    const dictionry = JSON.parse(file);
-    res.send(dictionry);
+    if (module) {
+      const jsonFile = fs.readFileSync(
+        path.join(__dirname, `/assets/i18n/${module}/${lang}.json`)
+      );
+      const jsonDictionary = JSON.parse(jsonFile);
+      res.send(jsonDictionary);
+    } else if (common) {
+      const jsonFile = fs.readFileSync(
+        path.join(__dirname, `/assets/i18n/${common}/${lang}.json`)
+      );
+      const jsonDictionary = JSON.parse(jsonFile);
+      res.send(jsonDictionary);
+    } else {
+      const jsonFile = fs.readFileSync(
+        path.join(__dirname, `/assets/i18n/${lang}.json`)
+      );
+      const jsonDictionary = JSON.parse(jsonFile);
+      res.send(jsonDictionary);
+    }
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
