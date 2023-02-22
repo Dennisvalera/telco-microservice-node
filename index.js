@@ -6,7 +6,7 @@ var fs = require("fs");
 
 app.use(cors());
 
-function sendFileContent(filePath) {
+function sendFileContent(filePath, res) {
   try {
     const file = fs.readFileSync(path.join(__dirname, filePath));
     const content = JSON.parse(file);
@@ -19,21 +19,22 @@ function sendFileContent(filePath) {
 app.get("/getConfig", (req, res) => {
   const env = req.query["env"];
   const filePath = `/config/${env}/config.json`;
-  sendFileContent(filePath);
+  sendFileContent(filePath, res);
 });
 
 app.get("/getConfigI18n", (req, res) => {
   const filePath = `/i18n/config.json`;
-  sendFileContent(filePath);
+  sendFileContent(filePath, res);
 });
 
 app.get("/getDictionary", (req, res) => {
-  const module = req.query["module"];
   const lang = req.query["lang"];
-  const filePath = module ? `/i18n/assets/${module}/${lang}.json` : `/i18n/assets/${lang}.json`;
-  sendFileContent(filePath);
+  const module = req.query["module"];
+  const common = req.query["common"];
+  const folder = module ? module : common;
+  const filePath = module ? `/i18n/assets/${folder}/${lang}.json` : `/i18n/assets/${lang}.json`;
+  sendFileContent(filePath, res);
 });
-
 
 app.listen(3000, () => {
   console.log("listening on port", 3000);

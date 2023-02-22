@@ -1,3 +1,5 @@
 {
-    "idioma": "English"
+    "language": "Language",
+    "title": "Shell title",
+    "menu": "Menu"
 }
