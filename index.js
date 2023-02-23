@@ -31,8 +31,10 @@ app.get("/getDictionary", (req, res) => {
   const lang = req.query["lang"];
   const module = req.query["module"];
   const common = req.query["common"];
-  const folder = module ? module : common;
-  const filePath = module ? `/i18n/assets/${folder}/${lang}.json` : `/i18n/assets/${lang}.json`;
+  console.log("Module: ", module);
+  console.log("Common: ", common);
+  const folder = module ? module : (common ? common : '');
+  const filePath = folder ? `/i18n/assets/${folder}/${lang}.json` : `/i18n/assets/${lang}.json`;
   sendFileContent(filePath, res);
 });
 
