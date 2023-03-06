@@ -15,6 +15,16 @@ function sendFileContent(filePath, res) {
     res.status(500).send({ message: err.message });
   }
 }
+app.get("/refresh-token", (req, res) => {
+  const newToken = "newSuperSecretToken"; // Example to res with new token
+  res.json({ token: newToken });
+});
+
+app.get("/pet/:petId", (req, res) => {
+  setTimeout(() => {
+    res.status(200).send({ message: 'example res' });
+  },2000); 
+});
 
 app.get("/getConfig", (req, res) => {
   const env = req.query["env"];

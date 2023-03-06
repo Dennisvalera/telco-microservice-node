@@ -1,3 +1,7 @@
 {
-    "env": "DESA"
+    "env": "DESA",
+    "url_config": {
+        "timeout": 10000,
+        "BASE_PATH": "https://petstore.swagger.io/v2"
+    }
 }
